@@ -4,7 +4,7 @@ import Day
 import kotlin.enums.enumEntries
 
 private class Day01 : Day(2025, 1) {
-  fun partOne2(): Any {
+  fun partOne2(input: List<String>): Any {
     var num = 50
     var count = 0
     input.forEach {
@@ -21,7 +21,7 @@ private class Day01 : Day(2025, 1) {
     return count
   }
 
-  override fun partOne(): Any {
+  override fun partOne(input: List<String>): Any {
     return input
       .map {
         if (it.startsWith('R')) {
@@ -43,7 +43,7 @@ private class Day01 : Day(2025, 1) {
       .first
   }
 
-  override fun partTwo(): Any {
+  override fun partTwo(input: List<String>): Any {
     var count = 0
     var num = 50
     input.forEach {

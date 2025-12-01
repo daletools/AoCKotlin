@@ -30,9 +30,6 @@ fun String.md5() = BigInteger(
   .toString(16)
   .padStart(32, '0')
 
-/**
- * The cleaner shorthand for printing output.
- */
 fun Any?.println() = println(this)
 
 fun getSessionCookie(): String {
@@ -74,7 +71,9 @@ fun getInput(year: Int, day: Int): List<String> {
   Files.createDirectories(dirPath) // Ensure directory exists
 
   val filename = "day${day.toString().padStart(2, '0')}.txt"
+  val testFileName = "day${day.toString().padStart(2, '0')}_test.txt"
   val filePath = dirPath.resolve(filename)
+  val testFilePath = dirPath.resolve(testFileName)
 
   // Check if we need to fetch new input
   if (!filePath.exists() || Files.size(filePath) == 0L) {
@@ -86,12 +85,15 @@ fun getInput(year: Int, day: Int): List<String> {
     println("Using cached input from ${filePath.toAbsolutePath()}")
   }
 
-  // Use your existing readInput method to parse the file
+  if (!testFilePath.exists()) {
+    Files.createFile(testFilePath)
+  }
+
   return readInputFile(filePath.toString())
 }
 
 /**
- * Helper function to read input from a file path (similar to your existing readInput)
+ * Helper function to read input from a file path
  */
 private fun readInputFile(filePath: String): List<String> {
   return File(filePath).readLines().map { it.trim() }
