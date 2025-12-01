@@ -6,11 +6,23 @@ abstract class Day(val year:Int, val day: Int) {
   abstract fun partOne(): Any
   abstract fun partTwo(): Any
 
-  fun run() {
+  fun run(part: Int = 0) {
     "Advent of Code $year - Day $day".println()
-    "Part One:".println()
-    partOne().println()
-    "Part Two:".println()
-    partTwo().println()
+    if (part == 0 || part == 1) {
+      "Part One:".println()
+      try {
+        partOne().println()
+      } catch (e: Error) {
+        e.println()
+      }
+    }
+    if (part == 0 || part == 2) {
+      "Part Two:".println()
+      try {
+        partTwo().println()
+      } catch (e: Error) {
+        e.println()
+      }
+    }
   }
 }

@@ -21,7 +21,12 @@ fun readInput(name: String) = Path("src/$name.txt").readText().trim().lines()
 /**
  * Converts string to md5 hash.
  */
-fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
+fun String.md5() = BigInteger(
+    1,
+    MessageDigest
+        .getInstance("MD5")
+        .digest(toByteArray())
+)
   .toString(16)
   .padStart(32, '0')
 
@@ -31,9 +36,14 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
 fun Any?.println() = println(this)
 
 fun getSessionCookie(): String {
-  return System.getenv("AOC_SESSION") ?: throw IllegalStateException(
-    "AOC_SESSION environment variable not set"
-  )
+  val env = File(".env")
+  return if (env.exists()) {
+    env.readLines().filter { it.startsWith("AOC_SESSION=") }[0].split("=")[1]
+  } else {
+    System.getenv("AOC_SESSION") ?: throw IllegalStateException(
+      "AOC_SESSION environment variable not set"
+    )
+  }
 }
 
 fun fetchInput(year: Int, day: Int): String {
