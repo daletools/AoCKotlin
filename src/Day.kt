@@ -1,6 +1,8 @@
 import util.*
 import java.io.File
 import java.nio.file.Paths
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
 
 abstract class Day(val year:Int, val day: Int) {
   val input: List<String> by lazy { getInput(year, day) }
@@ -29,9 +31,15 @@ abstract class Day(val year:Int, val day: Int) {
       try {
         if (testData.isNotEmpty()) {
           "Test:".println()
-          partOne(testData).println()
+          val ms = measureTimeMillis {
+            partOne(testData).println()
+          }
+          println("calculated in $ms ms")
         }
-        partOne(input).println()
+        val ms = measureTimeMillis {
+          partOne(input).println()
+        }
+        println("calculated in $ms ms")
       } catch (e: Error) {
         e.println()
       }
@@ -41,9 +49,15 @@ abstract class Day(val year:Int, val day: Int) {
       try {
         if (testData.isNotEmpty()) {
           "Test:".println()
-          partTwo(testData).println()
+          val ms = measureTimeMillis {
+            partTwo(testData).println()
+          }
+          println("calculated in $ms ms")
         }
-        partTwo(input).println()
+        val ms = measureTimeMillis {
+          partTwo(input).println()
+        }
+        println("calculated in $ms ms")
       } catch (e: Error) {
         e.println()
       }

@@ -81,8 +81,6 @@ fun getInput(year: Int, day: Int): List<String> {
     val input = fetchInput(year, day)
     Files.write(filePath, input.toByteArray())
     println("Input saved to ${filePath.toAbsolutePath()}")
-  } else {
-    println("Using cached input from ${filePath.toAbsolutePath()}")
   }
 
   if (!testFilePath.exists()) {

@@ -2,6 +2,7 @@ package aoc2025
 
 import Day
 
+
 class Day02 : Day(2025, 2) {
   override fun partOne(input: List<String>): Long {
     var sum = 0L
