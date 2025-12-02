@@ -6,8 +6,8 @@ abstract class Day(val year:Int, val day: Int) {
   val input: List<String> by lazy { getInput(year, day) }
 
 
-  abstract fun partOne(input: List<String> = this.input): Any
-  abstract fun partTwo(input: List<String> = this.input): Any
+  abstract fun partOne(input: List<String> = this.input): Long
+  abstract fun partTwo(input: List<String> = this.input): Long
   fun partOne() {
     partOne(this.input)
   }
