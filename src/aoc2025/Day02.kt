@@ -39,8 +39,6 @@ class Day02 : Day(2025, 2) {
         for (len in 1..((num.toString().length) / 2)) {
           val digits = num.toString().length
           if (digits % len != 0) continue
-          val str = num.toString()
-          val test = str.chunked(len)
           val parts = num.toString().chunked(len).toSet()
           if (parts.size == 1) {
             sum += num
