@@ -53,4 +53,8 @@ class Day02 : Day(2025, 2) {
   }
 }
 
-fun main() = Day02().run()
+fun main() {
+  val day = Day02()
+  day.benchmark(1, day::partOne)
+  day.benchmark(2, day::partTwo)
+}

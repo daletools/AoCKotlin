@@ -1,3 +1,4 @@
+import kotlinx.benchmark.*
 import util.*
 import java.io.File
 import java.nio.file.Paths
@@ -7,12 +8,8 @@ import kotlin.system.measureTimeMillis
 abstract class Day(val year:Int, val day: Int) {
   val input: List<String> by lazy { getInput(year, day) }
 
-
   abstract fun partOne(input: List<String> = this.input): Long
   abstract fun partTwo(input: List<String> = this.input): Long
-  fun partOne() {
-    partOne(this.input)
-  }
 
   fun run(part: Int = 0) {
     "Advent of Code $year - Day $day".println()
@@ -63,4 +60,30 @@ abstract class Day(val year:Int, val day: Int) {
       }
     }
   }
+
+  fun benchmark(part: Int, function: (List<String>) -> Long) {
+    val data = getInput(year, day)
+    var spinner: Long = System.currentTimeMillis()
+
+    repeat(100) { spinner += function(data) xor spinner }
+    println("Warmed up!")
+    val times = mutableListOf<Long>()
+
+    repeat(1000) {
+    val time = measureNanoTime {
+      spinner += function(data) xor spinner
+    }
+    times.add(time)
+    }
+
+    println("Spinner $spinner")
+
+    val totalMs = times.sum() / 1_000_000.0
+    val averageMs = times.average() / 1_000_000.0
+    val medianMs = times.sorted()[times.size / 2] / 1_000_000.0
+
+    println("Part $part Benchmark:")
+    println("  Total time: ${"%.3f".format(totalMs)} ms")
+    println("  Average:    ${"%.3f".format(averageMs)} ms")
+    println("  Median:     ${"%.3f".format(medianMs)} ms")  }
 }
