@@ -20,6 +20,7 @@ private class Day04 : Day(2025, 4) {
       for (other in map) {
         if (point == other) continue
         if (point.isDiagonallyAdjacent(other)) n++
+        if (n > 3) break
       }
       if (n < 4) sum++
     }
@@ -45,9 +46,35 @@ private class Day04 : Day(2025, 4) {
         }
       }
     }
+<<<<<<< Updated upstream
       .flatten()
       .count { it }
       .toLong()
+=======
+
+    var curr = map.size
+    var sum = 0
+    do {
+      curr = map.size
+      val copy = map.toList()
+      for (point in copy) {
+        var n = 0
+        for (other in copy) {
+          if (point == other) continue
+          if (point.isDiagonallyAdjacent(other)) n++
+          if (n > 3) break //seems like a huge optimization actually
+        }
+        if (n < 4) {
+          sum++
+          map.remove(point)
+        }
+      }
+    } while (map.size < curr)
+
+    return sum.toLong()
+  }
+
+>>>>>>> Stashed changes
 }
 
 fun main() {
