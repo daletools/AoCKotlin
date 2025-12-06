@@ -48,39 +48,6 @@ private class Day04 : Day(2025, 4) {
       .flatten()
       .count { it }
       .toLong()
-
-  fun partTwotemp(input: List<String>): Long {
-    val map = mutableListOf<ComplexInt>()
-    for (row in input.indices) {
-      for (col in input[row].indices) {
-        if (input[row][col] == '@') {
-          map.add(ComplexInt(row, col))
-        }
-      }
-    }
-
-    var curr = map.size
-    var sum = 0
-    do {
-      curr = map.size
-      val copy = map.toList()
-      for (point in copy) {
-        var n = 0
-        for (other in copy) {
-          if (point == other) continue
-          if (point.isDiagonallyAdjacent(other)) n++
-          if (n > 3) break
-        }
-        if (n < 4) {
-          sum++
-          map.remove(point)
-        }
-      }
-    } while (map.size < curr)
-
-    return sum.toLong()
-  }
-
 }
 
 fun main() {
