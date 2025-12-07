@@ -21,7 +21,6 @@ abstract class Day(val year:Int, val day: Int) {
     )
     val testData = if (testFilePath.exists()) testFilePath
       .readLines()
-      .map { it.trim() }
     else listOf()
     if (part == 0 || part == 1) {
       "Part One:".println()
@@ -69,6 +68,11 @@ abstract class Day(val year:Int, val day: Int) {
     println("Warmed up!")
     val times = mutableListOf<Long>()
 
+    repeat(5) {
+      System.gc()
+      Thread.sleep(10)
+    }
+
     repeat(1000) {
     val time = measureNanoTime {
       spinner += function(data) xor spinner
@@ -85,5 +89,6 @@ abstract class Day(val year:Int, val day: Int) {
     println("Part $part Benchmark:")
     println("  Total time: ${"%.3f".format(totalMs)} ms")
     println("  Average:    ${"%.3f".format(averageMs)} ms")
-    println("  Median:     ${"%.3f".format(medianMs)} ms")  }
+    println("  Median:     ${"%.3f".format(medianMs)} ms")
+  }
 }

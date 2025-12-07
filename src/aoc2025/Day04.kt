@@ -27,54 +27,24 @@ private class Day04 : Day(2025, 4) {
     return sum.toLong()
   }
 
-  override fun partTwo(input: List<String>): Long =
-    input.mapIndexed { row, line ->
-      line.mapIndexed { col, cell ->
-        if (cell != '@') {
-          false
-        } else {
-          listOf(
-            input.getOrNull(row - 1)?.getOrNull(col - 1) == '@',
-            input.getOrNull(row - 1)?.getOrNull(col) == '@',
-            input.getOrNull(row - 1)?.getOrNull(col + 1) == '@',
-            input.getOrNull(row)?.getOrNull(col - 1) == '@',
-            input.getOrNull(row)?.getOrNull(col + 1) == '@',
-            input.getOrNull(row + 1)?.getOrNull(col - 1) == '@',
-            input.getOrNull(row + 1)?.getOrNull(col) == '@',
-            input.getOrNull(row + 1)?.getOrNull(col + 1) == '@',
-          ).count { it } < 4
-        }
+  override fun partTwo(input: List<String>): Long = input.mapIndexed { row, line ->
+    line.mapIndexed { col, cell ->
+      if (cell != '@') {
+        false
+      } else {
+        listOf(
+          input.getOrNull(row - 1)?.getOrNull(col - 1) == '@',
+          input.getOrNull(row - 1)?.getOrNull(col) == '@',
+          input.getOrNull(row - 1)?.getOrNull(col + 1) == '@',
+          input.getOrNull(row)?.getOrNull(col - 1) == '@',
+          input.getOrNull(row)?.getOrNull(col + 1) == '@',
+          input.getOrNull(row + 1)?.getOrNull(col - 1) == '@',
+          input.getOrNull(row + 1)?.getOrNull(col) == '@',
+          input.getOrNull(row + 1)?.getOrNull(col + 1) == '@',
+        ).count { it } < 4
       }
     }
-<<<<<<< Updated upstream
-      .flatten()
-      .count { it }
-      .toLong()
-=======
-
-    var curr = map.size
-    var sum = 0
-    do {
-      curr = map.size
-      val copy = map.toList()
-      for (point in copy) {
-        var n = 0
-        for (other in copy) {
-          if (point == other) continue
-          if (point.isDiagonallyAdjacent(other)) n++
-          if (n > 3) break //seems like a huge optimization actually
-        }
-        if (n < 4) {
-          sum++
-          map.remove(point)
-        }
-      }
-    } while (map.size < curr)
-
-    return sum.toLong()
-  }
-
->>>>>>> Stashed changes
+  }.flatten().count { it }.toLong()
 }
 
 fun main() {

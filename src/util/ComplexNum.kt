@@ -31,6 +31,12 @@ data class ComplexInt(var real: Int, var complex: Int = 0) {
 
   fun shift(direction: Direction, magnitude: Int = 1) = this + (direction.vector * magnitude)
 
+  fun shiftThis(direction: Direction, magnitude: Int = 1) {
+    val new = shift(direction, magnitude)
+    this.real = new.x
+    this.complex = new.y
+  }
+
   fun manhattanDistance(other: ComplexInt) = abs(real - other.real) + abs(complex - other.complex)
   fun isAdjacent(other: ComplexInt) = manhattanDistance(other) == 1
   fun chebyshevDistance(other: ComplexInt) = max(abs(real - other.real), abs(complex - other.complex))

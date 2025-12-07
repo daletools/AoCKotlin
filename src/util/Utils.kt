@@ -16,7 +16,7 @@ import kotlin.io.path.exists
 /**
  * Reads lines from the given input txt file.
  */
-fun readInput(name: String) = Path("src/$name.txt").readText().trim().lines()
+fun readInput(name: String) = Path("src/$name.txt").readText().lines()
 
 /**
  * Converts string to md5 hash.
@@ -59,7 +59,7 @@ fun fetchInput(year: Int, day: Int): String {
     throw RuntimeException("Failed to fetch input: HTTP ${response.statusCode()}")
   }
 
-  return response.body().trim()
+  return response.body()
 }
 
 /**
@@ -94,5 +94,5 @@ fun getInput(year: Int, day: Int): List<String> {
  * Helper function to read input from a file path
  */
 private fun readInputFile(filePath: String): List<String> {
-  return File(filePath).readLines().map { it.trim() }
+  return File(filePath).readLines().map { it }
 }
