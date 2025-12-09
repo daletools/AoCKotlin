@@ -52,4 +52,6 @@ data class ComplexInt(var real: Int, var complex: Int = 0) {
       ((complex - minY).mod(height)) + minY
     )
   }
+
+  fun rectangleArea(other: ComplexInt): Int = (abs(y - other.y) + 1) * ((x - other.x) + 1)
 }
