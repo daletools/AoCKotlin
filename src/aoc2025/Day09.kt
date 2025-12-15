@@ -26,42 +26,50 @@ private class Day09: Day(2025, 9) {
     val coordinates = input.map { line ->
       line.split(',').map { it.toInt() }
     }
-
+    val lines = coordinates.zipWithNext()
     var max = 0L
-    var candidate1: List<Int> = listOf()
-    var candidate2: List<Int> = listOf()
 
-    for (i in coordinates.indices) {
-      val a = coordinates[i]
-      for (j in coordinates.indices) {
-        if (i == j) continue
-        val b = coordinates[j]
-        val size = (abs(a[0] - b[0]) + 1) * (abs(a[1] - b[1]) + 1)
-        if (size < max) continue
-        val (minY, maxY) = listOf(a[0], b[0]).sorted()
-        val (minX, maxX) = listOf(a[1], b[1]).sorted()
+   for (i in coordinates.indices) {
+     val a = coordinates[i]
+     for (j in coordinates.indices) {
+       val b = coordinates[j]
+       if (i == j) continue
+       val size = abs((a[0] - b[0]) + 1L) * (abs(a[1] - b[1]) + 1)
+       if (size < max) continue
+       val upper = listOf(Pair(a[0], a[1]), Pair(a[0], b[1]))
+       val right = listOf(Pair(a[0], b[1]), Pair(b[0], b[1]))
+       val lower = listOf(Pair(b[0], a[1]), Pair(b[0], b[1]))
+       val left = listOf(Pair(a[0], a[1]), Pair(b[0], a[1]))
 
-        val interference = coordinates.any {
-          val c = it[0] in minY+1..maxY-1
-          val d = it[1] in minX+1..maxX-1
-
-          it.toString() != a.toString() &&
-          it.toString() != b.toString() &&
-          it[0] in minY+1..maxY-1 &&
-          it[1] in minX+1..maxX-1 &&
-          i % 2 == j % 2
-        }
-
-        if (!interference) {
-          max = max(max, size.toLong())
-          candidate1 = a
-          candidate2 = b
-        }
-      }
-    }
-
-    candidate1.toString().println()
-    candidate2.toString().println()
+       var collision = false
+       for (line in lines) {
+         //line is vertical
+         if (line.first[0] == line.second[0]) {
+           val x = line.first[0]
+           if (x in upper[0].second..upper[1].second) {
+             val (y1, y2) = listOf(line.first[1], line.second[1]).sorted()
+             if (upper[0].first in (y1 + 1)..<y2 || lower[0].first in (y1 + 1)..<y2) {
+               collision = true
+               break
+             }
+           }
+           //line is horizontal
+         } else {
+           val y = line.first[1]
+            if (y in right[0].first..right[1].first) {
+              val (x1, x2) = listOf(line.first[0], line.second[0])
+              if (left[1].first in (x1 + 1)..<x2 || right[1].first in (x1 + 1..<x2)) {
+                collision = true
+                break
+              }
+            }
+         }
+       }
+       if (!collision) {
+         max = max(max, size)
+       }
+     }
+   }
 
     return max
   }
